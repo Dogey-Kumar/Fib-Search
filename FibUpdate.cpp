@@ -1,22 +1,23 @@
 #include <iostream>
-using namespace std;
+#include <vector>
+#include <algorithm>
 
-int fibonacciSearch(int arr[], int x, int n) {
-    int fibM2 = 0; // Two elements before current Fibonacci number
-    int fibM1 = 1; // One element before current Fibonacci number
-    int fibM = fibM2 + fibM1; // Current Fibonacci number
+size_t fibonacciSearch(const std::vector<int>& arr, int x) {
+    size_t fibM2 = 0; // Two elements before current Fibonacci number
+    size_t fibM1 = 1; // One element before current Fibonacci number
+    size_t fibM = fibM2 + fibM1; // Current Fibonacci number
 
-    // Find the smallest Fibonacci number greater than or equal to n
-    while (fibM < n) {
+    // Find the smallest Fibonacci number greater than or equal to the array size
+    while (fibM < arr.size()) {
         fibM2 = fibM1;
         fibM1 = fibM;
         fibM = fibM2 + fibM1;
     }
 
-    int offset = -1;
+    size_t offset = -1;
 
     while (fibM > 1) {
-        int i = min(offset + fibM2, n - 1);
+        size_t i = std::min(offset + fibM2, arr.size() - 1);
 
         if (arr[i] < x) {
             fibM = fibM1;
@@ -39,16 +40,14 @@ int fibonacciSearch(int arr[], int x, int n) {
 }
 
 int main() {
-    int arr[] = {10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235};
-    int n = sizeof(arr) / sizeof(arr[0);
+    std::vector<int> arr = {10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235};
     int x = 235;
-    int ind = fibonacciSearch(arr, x, n);
+    size_t ind = fibonacciSearch(arr, x);
 
-    if (ind >= 0)
-        cout << "Found at index: " << ind << endl;
+    if (ind != -1)
+        std::cout << "Found at index: " << ind << std::endl;
     else
-        cout << x << " isn't present in the array" << endl;
+        std::cout << x << " isn't present in the array" << std::endl;
 
     return 0;
 }
-//end
